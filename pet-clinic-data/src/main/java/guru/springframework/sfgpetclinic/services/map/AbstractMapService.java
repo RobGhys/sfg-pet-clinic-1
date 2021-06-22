@@ -4,51 +4,49 @@ import guru.springframework.sfgpetclinic.model.BaseEntity;
 
 import java.util.*;
 
-/**
- * Created by jt on 7/21/18.
- */
-public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
-
+public abstract class AbstractMapService<T extends BaseEntity, Id extends Long> {
     protected Map<Long, T> map = new HashMap<>();
 
-    Set<T> findAll(){
+    Set<T> findAll() {
         return new HashSet<>(map.values());
     }
 
-    T findById(ID id) {
+    T findById(Id id){
         return map.get(id);
     }
 
     T save(T object){
-
-        if(object != null) {
-            if(object.getId() == null){
+        if (object != null) {
+            // If object has no Id yet, we create a new Id with getNextId()
+            if (object.getId() == null) {
                 object.setId(getNextId());
             }
-
-            map.put(object.getId(), object);
-        } else {
-            throw new RuntimeException("Object cannot be null");
+            map.put(object.getId(), object); // saves object in map with object's key
         }
-
+        else {
+            throw new RuntimeException("Object can't be null.");
+        }
         return object;
     }
 
-    void deleteById(ID id){
+    void deleteById(Id id){
         map.remove(id);
     }
 
     void delete(T object){
+        // Use lambda expression
         map.entrySet().removeIf(entry -> entry.getValue().equals(object));
     }
 
-    private Long getNextId(){
+    private Long getNextId() {
+        Long nextId = null; // To avoid null pointer exception
 
-        Long nextId = null;
-
+        // If there is already an element in "map", nextId takes the size of the map + 1
         try {
             nextId = Collections.max(map.keySet()) + 1;
-        } catch (NoSuchElementException e) {
+        }
+        // If there is nothing in "map", nextId = 1
+        catch (NoSuchElementException e) {
             nextId = 1L;
         }
 
