@@ -10,6 +10,8 @@ import guru.springframework.sfgpetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+
 @Component // Becomes a Spring bean
 public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
@@ -34,15 +36,38 @@ public class DataLoader implements CommandLineRunner {
         cat.setName("Poncho");
         PetType savedCatPetType = petTypeService.save(cat);
 
-        // We don't ask explicity to create an ID value. They get generated automatically through the AbstractMapService "save" method.
+        // We don't ask explicity to create an ID value.
+        // They get generated automatically through the AbstractMapService "save" method.
         Owner owner1 = new Owner();
         owner1.setFirstName("Rob");
         owner1.setLastName("Ghyselinck");
+        owner1.setAddress("Rue Dr D");
+        owner1.setCity("Charleroi");
+        owner1.setTelephone("0475757575");
+
+        Pet robsPet = new Pet();
+        robsPet.setPetType(savedDogPetType);
+        robsPet.setOwner(owner1);
+        robsPet.setBirthDate(LocalDate.now());
+        robsPet.setName("Le chieur-pisseur");
+        owner1.getPets().add(robsPet);
+
         ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Caroline");
         owner2.setLastName("Hazard");
+        owner2.setAddress("Rue Dr D");
+        owner2.setCity("Charleroi");
+        owner2.setTelephone("0498989898");
+
+        Pet carolinesPet = new Pet();
+        carolinesPet.setPetType(savedCatPetType);
+        carolinesPet.setOwner(owner2);
+        carolinesPet.setBirthDate(LocalDate.now());
+        carolinesPet.setName("Poupounsss");
+        owner2.getPets().add(carolinesPet);
+
         ownerService.save(owner2);
 
         System.out.println("Loaded Owners successfully...");
