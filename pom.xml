@@ -94,7 +94,6 @@
             </plugin>
         </plugins>
     </build>
-
     <scm>
         <developerConnection>scm:git:git@github.com:RobGhys/sfg-pet-clinic-1.git</developerConnection>
       <tag>HEAD</tag>
