@@ -10,9 +10,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PetMapServiceTest {
-
     private PetMapService petMapService;
-
     private final Long petId = 1L;
 
     @BeforeEach
