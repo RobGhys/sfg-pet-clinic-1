@@ -30,7 +30,9 @@ public class VisitController {
     public void dataBinder(WebDataBinder dataBinder) {
         dataBinder.setDisallowedFields("id");
 
+        // Bind local dates based on a String. Affects the visit controller
         dataBinder.registerCustomEditor(LocalDate.class, new PropertyEditorSupport() {
+            // Allows different date format to be parsed
             @Override
             public void setAsText(String text) throws IllegalArgumentException{
                 setValue(LocalDate.parse(text));
