@@ -21,9 +21,14 @@ public class VetController {
 
     @RequestMapping({"/vets", "/vets/index", "/vets/index.html", "/vets.html"})
     public String listVets(Model model){
-
         model.addAttribute("vets", vetService.findAll());
 
         return "vets/index";
+    }
+
+    // Get request to receive a JSON-formatted object
+    @GetMapping("/api/vets") // Simulate a REST Api
+    public @ResponseBody Set<Vet> getVetsJson() {
+        return vetService.findAll();
     }
 }
